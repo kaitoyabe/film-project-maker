@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-recess-order",
+    "stylelint-config-prettier"
+  ],
+  "ignoreFiles": ["**/node_modules/**", ".next/**", "out/**"],
+  "rules": {
+    "string-quotes": "single"
+  }
+}
