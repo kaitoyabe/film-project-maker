@@ -2,19 +2,24 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Typography } from "@mui/material";
 import type { Identifier } from "dnd-core";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useDrop } from "react-dnd";
 
 import FilmItems from "components/FilmItems";
 import ItemToDrag from "components/ItemToDrag";
+import SearchMovieDialog from "components/SearchMovieInput/SearchMovieDialog";
+import ShareX from "components/ShareX";
 import { CustomContainer } from "components/common/CustomContainer";
 import useTierList from "hooks/useTierList";
 import IItemToDrag from "types/ItemToDrag";
 import { Types } from "types/TypesReducer";
+import { TmdbInfo } from "types/tmdb";
 
 const TierList: React.FC = () => {
-  const { tierListData, dispatch } = useTierList();
+  const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
+  const [movie, setMovie] = useState<TmdbInfo>();
 
+  const { tierListData, dispatch } = useTierList();
   const [{ handlerId, didDrop }, drop] = useDrop<
     IItemToDrag,
     void,
@@ -44,7 +49,7 @@ const TierList: React.FC = () => {
   });
 
   const onAddClick = useCallback(() => {
-    // TODO
+    setIsOpenAddDialog(true);
   }, []);
 
   return (
@@ -116,6 +121,15 @@ const TierList: React.FC = () => {
           追加
         </Button>
       </Box>
+      <ShareX />
+      {isOpenAddDialog && (
+        <SearchMovieDialog
+          isOpen={isOpenAddDialog}
+          onClose={() => setIsOpenAddDialog(false)}
+          movie={movie}
+          setMovie={setMovie}
+        />
+      )}
     </CustomContainer>
   );
 };

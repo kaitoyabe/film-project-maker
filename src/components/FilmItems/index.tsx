@@ -64,7 +64,6 @@ const FilmItems: React.FC<IProps> = ({ color, items, name, index }) => {
   return (
     <List
       id="FilmItemsList"
-      component="li"
       sx={{
         display: "grid",
         gridTemplateColumns: "70px 1fr 60px",

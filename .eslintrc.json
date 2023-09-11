@@ -126,7 +126,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "no-nested-ternary": "off",
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft"] }]
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft", "e"] }]
   },
   "overrides": [
     {

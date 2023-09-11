@@ -1,101 +1,110 @@
 import { produce } from "immer";
 
-import { ITierItem, ITierList } from 'types/TierItem'
-import { TierListActions, Types } from 'types/TypesReducer'
-
+import { ITierItem, ITierList } from "types/TierItem";
+import { TierListActions, Types } from "types/TypesReducer";
 
 const tierListReducer = (tierData: ITierList, action: TierListActions) => {
   switch (action.type) {
     // mover without item to tier
     case Types.Move_Without_Tier: {
-      const { indexFrom, indexTo } = action.payload
+      const { indexFrom, indexTo } = action.payload;
       const nextTierList = produce(tierData, (draft) => {
         const removed = draft.withoutTiers[indexFrom];
         draft.withoutTiers = draft.withoutTiers.filter(
-          itemTier => !Object.is(removed, itemTier)
-        )
-        draft.tiers[indexTo].items.push(removed)
-      })
+          (itemTier) => !Object.is(removed, itemTier)
+        );
+        draft.tiers[indexTo].items.push(removed);
+      });
 
-      return nextTierList
+      return nextTierList;
     }
 
     // move item to tier
     case Types.Move_Item_In_Tier: {
-      const { indexFrom, indexFromList, indexTo } = action.payload
+      const { indexFrom, indexFromList, indexTo } = action.payload;
 
-      return produce(tierData, draft => {
-        const removed = draft.tiers[indexFromList].items[indexFrom]
+      return produce(tierData, (draft) => {
+        const removed = draft.tiers[indexFromList].items[indexFrom];
         draft.tiers[indexFromList].items = draft.tiers[
           indexFromList
-        ].items.filter(itemTier => !Object.is(removed, itemTier))
-        draft.tiers[indexTo].items.push(removed)
-      })
+        ].items.filter((itemTier) => !Object.is(removed, itemTier));
+        draft.tiers[indexTo].items.push(removed);
+      });
     }
 
     // move to the no tiers
     case Types.Move_To_Without_Tier: {
-      const { indexFrom, indexFromList } = action.payload
+      const { indexFrom, indexFromList } = action.payload;
 
-      return produce(tierData, draft => {
-        const removed = draft.tiers[indexFromList].items[indexFrom]
+      return produce(tierData, (draft) => {
+        const removed = draft.tiers[indexFromList].items[indexFrom];
         draft.tiers[indexFromList].items = draft.tiers[
           indexFromList
-        ].items.filter(itemTier => !Object.is(removed, itemTier))
-        draft.withoutTiers.push(removed)
-      })
+        ].items.filter((itemTier) => !Object.is(removed, itemTier));
+        draft.withoutTiers.push(removed);
+      });
     }
 
     case Types.Move_TierItem_To_InitialTier: {
-      const { indexFrom, indexFromList, indexTo, indexToList } = action.payload
+      const { indexFrom, indexFromList, indexTo, indexToList } = action.payload;
 
-      return produce(tierData, draft => {
-        let removed: ITierItem
+      return produce(tierData, (draft) => {
+        let removed: ITierItem;
 
-        if (indexFromList === null) removed = draft.withoutTiers[indexFrom]
-        else removed = draft.tiers[indexFromList].items[indexFrom]
+        if (indexFromList === null) removed = draft.withoutTiers[indexFrom];
+        else removed = draft.tiers[indexFromList].items[indexFrom];
 
         if (indexToList === null)
-          draft.withoutTiers.filter(itemTier => !Object.is(removed, itemTier))
+          draft.withoutTiers.filter(
+            (itemTier) => !Object.is(removed, itemTier)
+          );
         else
           draft.tiers[indexToList].items.filter(
-            itemTier => !Object.is(removed, itemTier)
-          )
+            (itemTier) => !Object.is(removed, itemTier)
+          );
 
         if (indexToList !== null && indexFromList !== null) {
-          draft.tiers[indexToList].items.splice(indexTo, 0, removed)
+          draft.tiers[indexToList].items.splice(indexTo, 0, removed);
         } else {
-          draft.withoutTiers.splice(indexTo, 0, removed)
+          draft.withoutTiers.splice(indexTo, 0, removed);
         }
-      })
+      });
     }
 
     case Types.Move_TierItem_To_OtherTier: {
-      const { indexFrom, indexFromList, indexTo, indexToList } = action.payload
+      const { indexFrom, indexFromList, indexTo, indexToList } = action.payload;
 
-      return produce(tierData, draft => {
-        let dragged: ITierItem
+      return produce(tierData, (draft) => {
+        let dragged: ITierItem;
 
         if (indexFromList === null) {
-          dragged = draft.withoutTiers[indexFrom]
+          dragged = draft.withoutTiers[indexFrom];
         } else {
-          dragged = draft.tiers[indexFromList].items[indexFrom]
+          dragged = draft.tiers[indexFromList].items[indexFrom];
         }
 
         if (indexToList !== null && indexFromList !== null) {
-          draft.tiers[indexFromList].items.splice(indexFrom, 1)
-          draft.tiers[indexToList].items.splice(indexTo, 0, dragged)
+          draft.tiers[indexFromList].items.splice(indexFrom, 1);
+          draft.tiers[indexToList].items.splice(indexTo, 0, dragged);
         } else {
-          draft.withoutTiers.splice(indexFrom, 1)
-          draft.withoutTiers.splice(indexTo, 0, dragged)
+          draft.withoutTiers.splice(indexFrom, 1);
+          draft.withoutTiers.splice(indexTo, 0, dragged);
         }
-      })
+      });
+    }
+
+    case Types.Add_To_Without_Tier: {
+      const { filmData } = action.payload;
+
+      return produce(tierData, (draft) => {
+        draft.withoutTiers.push(filmData);
+      });
     }
 
     default: {
-      return tierData
+      return tierData;
     }
   }
-}
+};
 
-export default tierListReducer
+export default tierListReducer;

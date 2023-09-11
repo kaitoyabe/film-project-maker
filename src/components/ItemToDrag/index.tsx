@@ -210,9 +210,11 @@ const ItemToDrag: React.FC<IProps> = ({
             flexDirection: "column",
             padding: "4px 8px",
             minWidth: "50px",
-
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
             boxShadow: "0 0px 8px -2px rgba(0, 0, 0, 0.5)",
-            fontSize: "1.4rem",
+            fontSize: "1.0rem",
             color: "#dedede",
             border: "1px solid #0e0e0e",
             "&::after": {
