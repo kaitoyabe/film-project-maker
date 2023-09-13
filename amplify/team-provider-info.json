@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-filloomapp-dev-212609-authRole",
+      "UnauthRoleArn": "arn:aws:iam::548677477299:role/amplify-filloomapp-dev-212609-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::548677477299:role/amplify-filloomapp-dev-212609-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-filloomapp-dev-212609-deployment",
+      "UnauthRoleName": "amplify-filloomapp-dev-212609-unauthRole",
+      "StackName": "amplify-filloomapp-dev-212609",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:548677477299:stack/amplify-filloomapp-dev-212609/64339120-509e-11ee-9641-0ec5bc2505e5",
+      "AmplifyAppId": "d12g4dmdxldl1"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d12g4dmdxldl1",
+          "type": "cicd"
+        }
+      }
+    }
+  }
+}
