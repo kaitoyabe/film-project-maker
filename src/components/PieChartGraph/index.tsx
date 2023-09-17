@@ -46,8 +46,12 @@ const PieChartGraph: FC<{
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
   const [pieItems, setPieItems] = useState<IPieItem[]>([
     {
-      name: "",
-      value: 0,
+      name: "アイテム1",
+      value: 50,
+    },
+    {
+      name: "アイテム2",
+      value: 50,
     },
   ]);
 
@@ -139,11 +143,18 @@ const PieChartGraph: FC<{
           height: "100%",
           display: "flex",
           justifyContent: "space-around",
+          flexDirection: {
+            xs: "column",
+            md: "row",
+          },
         }}
       >
         <Box
           sx={{
-            width: "25%",
+            width: {
+              xs: "100%",
+              md: "35%",
+            },
           }}
         >
           <PieItemForm
@@ -161,37 +172,47 @@ const PieChartGraph: FC<{
             <Button onClick={onCreateClick}>作成</Button>
           </Box>
         </Box>
-        <img
-          className="absolute right-[23.1%] top-[31%]"
-          src={`${imageUrl}/original${movie?.poster_path ?? ""}`}
-          width={140}
-          alt=""
-        />
-        <ResponsiveContainer width="25%" height={400}>
-          <PieChart width={530} height={350}>
-            <Pie
-              data={pieItems}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              innerRadius={120}
-              outerRadius={140}
-              fill="#8884d8"
-              labelLine
-              label={label}
-              startAngle={90}
-              endAngle={-270}
-            >
-              {pieItems.map((entry, index) => (
-                <Cell
-                  key={`cell-${entry.name}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        <Box
+          sx={{
+            width: {
+              xs: "100%",
+              md: "50%",
+            },
+            position: "relative",
+          }}
+        >
+          <img
+            className="img-center"
+            src={`${imageUrl}/original${movie?.poster_path ?? ""}`}
+            width={140}
+            alt=""
+          />
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart width={650} height={350}>
+              <Pie
+                data={pieItems}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={120}
+                outerRadius={140}
+                fill="#8884d8"
+                labelLine
+                label={label}
+                startAngle={90}
+                endAngle={-270}
+              >
+                {pieItems.map((entry, index) => (
+                  <Cell
+                    key={`cell-${entry.name}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </Box>
       </Box>
       <ShareX />
       {isOpenAddDialog && (

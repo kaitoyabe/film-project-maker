@@ -13,8 +13,12 @@ const PieChartPage: FC = () => {
     defaultValues: {
       pieItems: [
         {
-          name: "",
-          value: 0,
+          name: "アイテム1",
+          value: 50,
+        },
+        {
+          name: "アイテム2",
+          value: 50,
         },
       ],
     },
