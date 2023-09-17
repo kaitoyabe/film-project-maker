@@ -1,13 +1,12 @@
 import React from "react";
 
-import Header from "components/Header";
 import TierList from "components/TierList";
+import Layout from "components/common/Layout";
 
 const App: React.FC = () => (
-  <>
-    <Header />
+  <Layout title="ティアー">
     <TierList />
-  </>
+  </Layout>
 );
 
 export default App;
